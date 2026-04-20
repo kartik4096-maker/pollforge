@@ -1,2 +1,2 @@
-const API = 'https://adaptive-investigation-absolutely-sandy.trycloudflare.com ';
+const API = 'https://pollforge-backend.onrender.com';
 export default API;
