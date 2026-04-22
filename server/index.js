@@ -7,10 +7,9 @@ const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 30000,
-  socketTimeoutMS: 45000,
-})
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error(err));
 
 app.use('/api/auth',  require('./routes/auth'));
 app.use('/api/polls', require('./routes/polls'));
