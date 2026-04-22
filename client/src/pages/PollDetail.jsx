@@ -8,7 +8,6 @@ export default function PollDetail() {
   const { token } = useAuth();
   const [poll, setPoll] = useState(null);
   const [selected, setSelected] = useState(null);
-  
   const [analytics, setAnalytics] = useState(null);
   const [message, setMessage] = useState('');
   const [msgType, setMsgType] = useState('success');
@@ -29,8 +28,6 @@ export default function PollDetail() {
     msg(data.message, res.ok ? 'success' : 'error');
     if (res.ok) load();
   };
-
-  
 
   const loadAnalytics = async () => {
     const res = await fetch(`${API}/api/polls/${id}/analytics`);
@@ -76,15 +73,6 @@ export default function PollDetail() {
       {token && poll.isActive && (
         <button className="btn-vote" onClick={castVote}>Cast My Vote</button>
       )}
-
-      <div className="section-card">
-  <h4>Get results by email</h4>
-  <div className="subscribe-row">
-    <input type="email" placeholder="your@email.com"
-      value={subEmail} onChange={e => setSubEmail(e.target.value)} />
-    <button className="btn-subscribe" onClick={subscribe}>Subscribe</button>
-  </div>
-</div>
 
       <div className="section-card">
         <h4>Analytics</h4>
