@@ -8,7 +8,7 @@ export default function PollDetail() {
   const { token } = useAuth();
   const [poll, setPoll] = useState(null);
   const [selected, setSelected] = useState(null);
-  const [subEmail, setSubEmail] = useState('');
+  
   const [analytics, setAnalytics] = useState(null);
   const [message, setMessage] = useState('');
   const [msgType, setMsgType] = useState('success');
@@ -30,17 +30,7 @@ export default function PollDetail() {
     if (res.ok) load();
   };
 
-  const subscribe = async () => {
-    if (!subEmail) return msg('Enter your email', 'error');
-    const res = await fetch(`${API}/api/polls/${id}/subscribe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: subEmail }),
-    });
-    const data = await res.json();
-    msg(data.message);
-    setSubEmail('');
-  };
+  
 
   const loadAnalytics = async () => {
     const res = await fetch(`${API}/api/polls/${id}/analytics`);
@@ -88,13 +78,13 @@ export default function PollDetail() {
       )}
 
       <div className="section-card">
-        <h4>Get results by email</h4>
-        <div className="subscribe-row">
-          <input type="email" placeholder="your@email.com"
-            value={subEmail} onChange={e => setSubEmail(e.target.value)} />
-          <button className="btn-subscribe" onClick={subscribe}>Subscribe</button>
-        </div>
-      </div>
+  <h4>Get results by email</h4>
+  <div className="subscribe-row">
+    <input type="email" placeholder="your@email.com"
+      value={subEmail} onChange={e => setSubEmail(e.target.value)} />
+    <button className="btn-subscribe" onClick={subscribe}>Subscribe</button>
+  </div>
+</div>
 
       <div className="section-card">
         <h4>Analytics</h4>
