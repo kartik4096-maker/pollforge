@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import API from '../config';
 
@@ -21,32 +21,30 @@ export default function Login() {
       if (!res.ok) return setError(data.message);
       login(data.user, data.token);
       navigate('/');
-    } catch (err) {
-      setError('Server error. Please try again.');
-    }
+    } catch { setError('Server error. Please try again.'); }
   };
 
   return (
-    <div className="auth-card">
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={e => setForm({ ...form, email: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={e => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="auth-wrap">
+      <div className="auth-card">
+        <h2>Welcome back</h2>
+        <p className="subtitle">Login to your PollForge account</p>
+        {error && <p className="error-msg" style={{marginBottom:'1rem'}}>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@example.com" value={form.email}
+              onChange={e => setForm({...form, email: e.target.value})} required />
+          </div>
+          <div className="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" value={form.password}
+              onChange={e => setForm({...form, password: e.target.value})} required />
+          </div>
+          <button type="submit" className="btn-primary">Login →</button>
+        </form>
+        <p className="auth-link">Don't have an account? <Link to="/register">Register</Link></p>
+      </div>
     </div>
   );
 }
