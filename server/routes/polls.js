@@ -75,15 +75,18 @@ router.post('/:id/close', auth, async (req, res) => {
 router.get('/:id/analytics', async (req, res) => {
   try {
     const poll = await Poll.findById(req.params.id);
+    if (!poll) return res.status(404).json({ message: 'Poll not found' });
     const { data } = await axios.post(`${process.env.FASTAPI_URL}/analytics`, {
-      poll_id: poll._id,
-      title:   poll.title,
-      options: poll.options,
+      poll_id: String(poll._id),
+      title: poll.title,
+      options: poll.options.map(o => ({
+        text: o.text,
+        votes: o.votes || 0
+      })),
     });
     res.json(data);
   } catch (err) {
+    console.error('Analytics error:', err.message);
     res.status(500).json({ message: 'Analytics service error' });
   }
 });
-
-module.exports = router;
