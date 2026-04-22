@@ -90,3 +90,5 @@ router.get('/:id/analytics', async (req, res) => {
     res.status(500).json({ message: 'Analytics service error' });
   }
 });
+
+module.exports = router;
